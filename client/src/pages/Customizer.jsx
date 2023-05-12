@@ -60,16 +60,22 @@ const Customizer = () => {
 	};
 
 	const handleActiveFilterTab = (tabName) => {
-		switch (tabname) {
+		switch (tabName) {
 			case "logoShirt":
-				state.isLogoTexture = !activeFilterTab[tabname];
+				state.isLogoTexture = !activeFilterTab[tabName];
 				break;
 			case "stylishShirt":
-				state.isFulTexture = !activeFilterTab[tabname];
+				state.isFulTexture = !activeFilterTab[tabName];
 			default:
 				state.isFullTexture = false;
 				state.isLogoTexture = true;
 		}
+		setActiveFilterTab((prevState) => {
+			return {
+				...prevState,
+				[tabName]: !prevState[tabName],
+			};
+		});
 	};
 
 	const readFile = (type) => {
@@ -122,9 +128,11 @@ const Customizer = () => {
 							<Tab
 								key={tab.name}
 								tab={tab}
-								isFilterTAb
-								isActiveTab=""
-								handleClick={() => {}}
+								isFilterTab
+								isActiveTab={activeFilterTab[tab.name]}
+								handleClick={() =>
+									handleActiveFilterTab(tab.name)
+								}
 							/>
 						))}
 					</motion.div>
